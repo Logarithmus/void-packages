@@ -1,0 +1,3 @@
+site="https://github.com/AOMediaCodec/libavif/tags"
+pattern="archive/\K[\d.]+(?=\.tar\.gz)"
+

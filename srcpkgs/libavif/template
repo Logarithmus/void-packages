@@ -1,0 +1,61 @@
+# Template file for 'libavif'
+pkgname=libavif
+version=0.8.4
+revision=1
+short_desc="Library for encoding and decoding .avif files"
+maintainer="Artur Sinila <personal@logarithmus.dev>"
+license="BSD-2-Clause"
+homepage="https://github.com/AOMediaCodec/libavif"
+changelog="https://github.com/AOMediaCodec/libavif/blob/master/CHANGELOG.md"
+distfiles="https://github.com/AOMediaCodec/libavif/archive/${version}.tar.gz"
+checksum=27d39b69151fd090f26e10779ec79876af44876d180edda77beafa8e7e7aca26
+
+build_options="aom dav1d libgav1 rav1e svt"
+desc_option_aom="Use AOM codec for encoding/decoding"
+desc_option_dav1d="Use dav1d decoder"
+desc_option_libgav1="Use libgav1 decoder"
+desc_option_rav1e="Use rav1e encoder"
+desc_option_svt="Use SVT-AV1 encoder"
+
+build_style=cmake
+configure_args="-DAVIF_BUILD_APPS=ON
+ $(vopt_if aom -DAVIF_CODEC_AOM=ON)
+ $(vopt_if dav1d -DAVIF_CODEC_DAV1D=ON)
+ $(vopt_if libgav1 -DAVIF_CODEC_LIBGAV1=ON)
+ $(vopt_if rav1e -DAVIF_CODEC_RAV1E=ON)
+ $(vopt_if svt -DAVIF_CODEC_SVT=ON)"
+hostmakedepends="pkg-config"
+makedepends="$(vopt_if aom libaom-devel)
+ $(vopt_if dav1d libdav1d-devel)
+ $(vopt_if libgav1 libgav1-devel)
+ $(vopt_if rav1e rav1e-devel)
+ $(vopt_if svt svt-av1-devel)"
+build_options_default="dav1d rav1e"
+
+post_install() {
+	vlicense LICENSE
+}
+
+libavif-devel_package() {
+	short_desc+=" - development files"
+	depends="${sourcepkg}>=${version}_${revision}
+	 $(vopt_if aom libaom-devel)
+	 $(vopt_if dav1d libdav1d-devel)
+	 $(vopt_if libgav1 libgav1-devel)
+	 $(vopt_if rav1e rav1e-devel)
+	 $(vopt_if svt svt-av1-devel)"
+	pkg_install() {
+		vmove usr/include
+		vmove "usr/lib/*.a"
+		vmove "usr/lib/*.so"
+		vmove usr/lib/pkgconfig
+	}
+}
+
+libavif-tools_package() {
+	short_desc+=" - tools"
+	pkg_install() {
+		vmove usr/bin
+		vmove usr/share/man
+	}
+}
