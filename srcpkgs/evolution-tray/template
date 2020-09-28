@@ -1,0 +1,37 @@
+# Template file for 'evolution'
+pkgname=evolution-tray
+version=0.0.8
+revision=1
+build_style=gnu-configure
+build_helper="gir qemu"
+configure_args=""
+hostmakedepends="evolution-devel intltool"
+#makedepends="NetworkManager-devel clutter-gtk-devel enchant2-devel
+# evolution-data-server-devel gspell-devel gtkhtml-devel libcanberra-devel
+# libgweather-devel libnotify-devel webkit2gtk-devel ytnef-devel
+# gnome-desktop-devel"
+depends="evolution"
+short_desc="Tray plugin for Evolution mail client"
+maintainer="Artur Sinila <personal@logarithmus.dev>"
+license="GPL-2.0-or-later"
+homepage="https://wiki.gnome.org/Apps/Evolution"
+changelog="https://raw.githubusercontent.com/GNOME/evolution/gnome-3-38/NEWS"
+distfiles="${GNOME_SITE}/${pkgname}/${version%.*}/${pkgname}-${version}.tar.xz"
+checksum=f81cc40f54aa2d059da4f3a94eb09362e81513306c974a41ca7895b9c8957c5d
+shlib_provides="libevolution-calendar.so libevolution-util.so libemail-engine.so
+ libevolution-mail.so libevolution-shell.so"
+
+build_options="gir"
+if [ -z "$CROSS_BUILD" ]; then
+	build_options_default="gir"
+fi
+
+evolution-devel_package() {
+	depends="webkit2gtk-devel gtk+3-devel libglib-devel evolution-data-server-devel
+	 gtkhtml-devel ${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/include
+		vmove usr/lib/pkgconfig
+	}
+}
