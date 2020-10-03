@@ -8,7 +8,7 @@ make_debug() {
 	[ -n "$nodebug" ] && return 0
 
 	dname=${1%/*}/ ; dname=${dname#$PKGDESTDIR}
-	fname="${1##*/}"
+	fname="${1##*/}.debug"
 	dbgfile="${dname}/${fname}"
 
 	mkdir -p "${PKGDESTDIR}/usr/lib/debug/${dname}"
@@ -27,7 +27,7 @@ attach_debug() {
 	[ -n "$nodebug" ] && return 0
 
 	dname=${1%/*}/ ; dname=${dname#$PKGDESTDIR}
-	fname="${1##*/}"
+	fname="${1##*/}.debug"
 	dbgfile="${dname}/${fname}"
 
 	$OBJCOPY --add-gnu-debuglink="${PKGDESTDIR}/usr/lib/debug/${dbgfile}" "$1"
