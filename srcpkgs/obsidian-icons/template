@@ -1,0 +1,15 @@
+# Template file for 'obsidian-icons'
+pkgname=obsidian-icons
+version=
+revision=1
+wrksrc=
+build_style=fetch
+hostmakedepends=""
+makedepends=""
+depends=""
+short_desc=""
+maintainer="Artur Sinila <personal@logarithmus.dev>"
+license="GPL-3.0"
+homepage="https://github.com/madmaxms/iconpack-obsidian"
+distfiles="https://github.com/madmaxms/iconpack-obsidian/releases/download/v4.13/obsidian-iconpack.tar.xz"
+checksum=badbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadb
