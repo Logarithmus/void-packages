@@ -5,7 +5,7 @@ _java_sec_ver=9
 _jdk_update=4
 _openjdk_version="openjdk-${_java_ver}"
 
-
+#Test
 pkgname=openjdk11
 version="${_java_ver}.${_java_min_ver}.${_java_sec_ver}+${_jdk_update}"
 revision=1
