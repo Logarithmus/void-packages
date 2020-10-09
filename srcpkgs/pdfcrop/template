@@ -1,0 +1,13 @@
+# Template file for 'pdfcrop'
+pkgname=pdfcrop
+version=0.4b
+revision=1
+wrksrc=${pkgname}_v${version}
+build_style=gnu-configure
+depends="perl ghostscript"
+short_desc=""
+maintainer="Artur Sinila <personal@logarithmus.dev>"
+license="GPL-3.0"
+homepage=""
+distfiles=""
+checksum=badbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadb
