@@ -1,0 +1,34 @@
+# Template file for 'simulide'
+pkgname=simulide
+version=0.4.13
+revision=2
+_pkgname=SimulIDE
+_rev=SR5
+wrksrc=${pkgname}_${version}-${_rev}_Sources
+build_wrksrc=build_XX
+build_style=qmake
+hostmakedepends="qt5-qmake pkg-config"
+makedepends="qt5-devel qt5-svg-devel qt5-multimedia-devel qt5-serialport-devel
+	qt5-script-devel elfutils-devel"
+short_desc="Electronic circuit simulator for PIC, AVR, Arduino"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="GPL-3.0-or-later"
+homepage="https://simulide.com"
+distfiles="https://mailfence.com/pub/docs/santigoro/web/${_pkgname}_${version}/${_pkgname}_${version}-${_rev}_Sources.tar.gz"
+checksum=b55b03e507882b8b68a25e5155dcac6020ba273be93bdf689612a0be67056d43
+nopie_files="/usr/bin/simulide"
+
+if [ "$CROSS_BUILD" ]; then
+	hostmakedepends+=" qt5-host-tools qt5-svg-devel qt5-script-devel \
+	qt5-serialport-devel qt5-multimedia-devel"
+fi
+
+pre_build() {
+	CXXFLAGS="$($PKG_CONFIG --cflags glib-2.0)"
+}
+
+do_install() {
+	cd release/${_pkgname}_${version}-${_rev}
+	vbin bin/simulide
+	mv share ${DESTDIR}/usr/
+}
