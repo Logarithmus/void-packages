@@ -19,6 +19,7 @@ restricted=yes
 nopie=yes
 build_options="systemqt"
 desc_option_systemqt="Use system QT libraries"
+build_options_default="systemqt"
 
 pre_install() {
 	if [ "${build_option_systemqt}" ]; then
