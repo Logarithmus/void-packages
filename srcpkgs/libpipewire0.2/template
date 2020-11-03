@@ -1,0 +1,41 @@
+# Template file for 'libpipewire0.2'
+pkgname=libpipewire0.2
+version=0.2.7
+revision=1
+wrksrc=pipewire-${version}
+build_style=meson
+configure_args="-Dgstreamer=disabled -Ddocs=false -Dsystemd=false"
+hostmakedepends="pkg-config"
+makedepends="dbus-devel alsa-lib-devel libudev-devel"
+short_desc="Server and user space API to deal with multimedia pipelines (v0.2)"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="MIT"
+homepage="https://pipewire.org/"
+changelog="https://gitlab.freedesktop.org/pipewire/pipewire/-/raw/master/NEWS"
+distfiles="https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/${version}/pipewire-${version}.tar.gz"
+checksum=bfaa0f6ae6c0791e2e0b59234d399753bf24f1b33dbf587682363a8463dd8df1
+#conf_files="/etc/pipewire/pipewire.conf"
+
+if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
+	makedepends+=" libatomic-devel"
+	LDFLAGS+=" -latomic"
+fi
+
+post_install() {
+	rm -r ${DESTDIR}/{etc,usr/bin}
+	mv ${DESTDIR}/usr/include/pipewire ${DESTDIR}/usr/include/pipewire-0.2
+	mv ${DESTDIR}/usr/include/spa ${DESTDIR}/usr/include/spa-0.1
+	vlicense LICENSE
+}
+
+libpipewire0.2-devel_package() {
+	depends="${pkgname}-${version}_${revision}"
+	short_desc+=" - pipewire and libspa development files"
+	pkg_install() {
+		vmove usr/include/pipewire-0.2
+		vmove usr/include/spa-0.1
+		vmove usr/lib/pkgconfig/libpipewire-0.2.pc
+		vmove usr/lib/pkgconfig/libspa-0.1.pc
+		vmove usr/lib/libpipewire-0.2.so
+	}
+}
