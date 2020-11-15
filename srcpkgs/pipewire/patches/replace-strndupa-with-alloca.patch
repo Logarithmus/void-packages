@@ -1,0 +1,31 @@
+--- pipewire-pulseaudio/src/stream.c
++++ pipewire-pulseaudio/src/stream.c
+@@ -965,8 +965,12 @@ static int create_stream(pa_stream_direction_t direction,
+            devid &= PA_IDX_MASK_MONITOR;
+
+ 		if (devid == PW_ID_ANY) {
+-			if (pa_endswith(dev, ".monitor"))
+-				dev = strndupa(dev, strlen(dev) - 8);
++			if (pa_endswith(dev, ".monitor")) {
++				char *old = dev;
++				size_t n = strlen(old) - 8;
++				dev = alloca(n);
++				strncpy(dev, old, n);
++			}
+ 		}
+ 	}
+ 
+--- src/modules/module-protocol-pulse/pulse-server.c
++++ src/modules/module-protocol-pulse/pulse-server.c
+@@ -3343,7 +3343,10 @@ static int do_get_info(struct client *client, uint32_t command, uint32_t tag, st
+ 
+ 	if (command == COMMAND_GET_SOURCE_INFO &&
+ 	    sel.value != NULL && pw_endswith(sel.value, ".monitor")) {
+-		sel.value = strndupa(sel.value, strlen(sel.value)-8);
++		char *old = sel.value;
++		size_t n = strlen(old) - 8;
++		sel.value = alloca(n);
++		strncpy(sel.value, old, n);
+ 	}
+ 
+ 	o = select_object(manager, &sel);

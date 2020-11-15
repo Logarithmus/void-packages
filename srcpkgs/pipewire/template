@@ -1,6 +1,6 @@
 # Template file for 'pipewire'
 pkgname=pipewire
-version=0.3.12
+version=0.3.15
 revision=1
 build_style=meson
 configure_args="-Dman=true -Dgstreamer=true -Ddocs=true -Dsystemd=false
@@ -9,13 +9,14 @@ configure_args="-Dman=true -Dgstreamer=true -Ddocs=true -Dsystemd=false
 hostmakedepends="doxygen graphviz pkg-config xmltoman"
 makedepends="SDL2-devel ffmpeg-devel gst-plugins-base1-devel jack-devel
  sbc-devel v4l-utils-devel libva-devel libbluetooth-devel"
+depends="rtkit"
 short_desc="Server and user space API to deal with multimedia pipelines"
 maintainer="Kridsada Thanabulpong <sirn@ogsite.net>"
 license="MIT"
 homepage="https://pipewire.org/"
 changelog="https://gitlab.freedesktop.org/pipewire/pipewire/-/raw/master/NEWS"
 distfiles="https://gitlab.freedesktop.org/pipewire/pipewire/-/archive/${version}/pipewire-${version}.tar.gz"
-checksum=98c71228aad2f8443e73a524106f32ca9a74e13c2bf55b65b1e06b72325892cd
+checksum=659bf2baeb5bb783b141b1b9d14da72865d3e84073b3e85503ac119a6813aa2a
 conf_files="/etc/pipewire/pipewire.conf"
 
 if [ "$XBPS_TARGET_NO_ATOMIC8" ]; then
