@@ -8,59 +8,67 @@ short_desc="Java integrated development environment by JetBrains"
 maintainer="John <me@johnnynator.dev>"
 license="Apache-2.0"
 homepage="https://www.jetbrains.org/"
-distfiles="https://download.jetbrains.com/idea/ideaIC-${version}-no-jbr.tar.gz"
-checksum=200b759b0d0410a9cae57d839c5f2b0f1e454b1b340206cf3edc2d03d29558be
-repository=nonfree
-nopie=yes
+distfiles="https://github.com/JetBrains/intellij-community/archive/idea/${_rev}.tar.gz>idea-${_rev}.tar.gz
+ https://github.com/JetBrains/android/archive/idea/${_rev}.tar.gz>idea-android-${_rev}.tar.gz"
+checksum="a0679a4dea7b99230e4ac18cb007c307ef882912979daa8112bc59ec9b53cc39
+ 3532f443a9ed6f1c62f39f60ab13a4aeee2ae5a0a8f2b0798c9bd65bddf5d33d"
 python_version=3
-skiprdeps="/usr/lib/intellij-idea/plugins/Kotlin/bin/linux/LLDBFrontend"
 
-post_extract() {
-	mv $XBPS_BUILDDIR/idea-IC-* ${wrksrc}
+pre_build() {
+	sed '/def targetOs =/c def targetOs = "linux"' -i build/dependencies/setupJbre.gradle
+	sed '/String targetOS/c   String targetOS = OS_LINUX' -i platform/build-scripts/groovy/org/jet
+brains/intellij/build/BuildOptions.groovy
+	sed -E 's|(<sysproperty key="jna.nosys")|<sysproperty key="intellij.build.target.os" value="li
+nux" />\1|' -i build.xml
+	sed -E 's/-Xmx[0-9]+m/-XX:-UseGCOverheadLimit/' -i build.xml
+}
+
+do_build() {
+	echo "Dummy"
 }
 
 do_install() {
-	vmkdir usr/bin
-	vmkdir usr/share/doc/intellij-idea
-	vmkdir usr/lib/intellij-idea
-	vmkdir usr/share/pixmaps
-	vmkdir usr/share/icons/hicolor/scalable/apps
-
-	mv bin lib plugins redist product-info.json build.txt  ${DESTDIR}/usr/lib/intellij-idea
-	mv LICENSE.txt NOTICE.txt license ${DESTDIR}/usr/share/doc/intellij-idea
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/android/lib/libwebp/win -rf
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/android/lib/libwebp/mac -rf
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/windows32 -rf
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/windows64 -rf
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/osx -rf
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/freebsd32 -rf
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/freebsd64 -rf
-	case $XBPS_TARGET_MACHINE in
-		x86_64)
-		rm ${DESTDIR}/usr/lib/intellij-idea/bin/fsnotifier
-		rm ${DESTDIR}/usr/lib/intellij-idea/bin/idea.vmoptions
-		rm ${DESTDIR}/usr/lib/intellij-idea/lib/pty4j-native/linux/x86 -rf
-		rm ${DESTDIR}/usr/lib/intellij-idea/lib/pty4j-native/linux/aarch64 -rf
-		rm ${DESTDIR}/usr/lib/intellij-idea/lib/pty4j-native/linux/mips64el -rf
-		rm ${DESTDIR}/usr/lib/intellij-idea/lib/pty4j-native/linux/ppc64le -rf
-		rm ${DESTDIR}/usr/lib/intellij-idea/plugins/webp/lib/libwebp/linux/libwebp_jni.so
-		rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/linux32 -rf
-		;;
-		i686)
-		rm ${DESTDIR}/usr/lib/intellij-idea/bin/fsnotifier64
-		rm ${DESTDIR}/usr/lib/intellij-idea/bin/idea64.vmoptions
-		rm ${DESTDIR}/usr/lib/intellij-idea/bin/libdbm64.so
-		rm ${DESTDIR}/usr/lib/intellij-idea/lib/pty4j-native/linux/x86_64 -rf
-		rm ${DESTDIR}/usr/lib/intellij-idea/lib/pty4j-native/linux/aarch64 -rf
-		rm ${DESTDIR}/usr/lib/intellij-idea/lib/pty4j-native/linux/mips64el -rf
-		rm ${DESTDIR}/usr/lib/intellij-idea/lib/pty4j-native/linux/ppc64le -rf
-		rm ${DESTDIR}/usr/lib/intellij-idea/plugins/webp/lib/libwebp/linux/libwebp_jni64.so
-		rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/linux64 -rf
-		;;
-	esac
-
-	ln -sf /usr/lib/intellij-idea/bin/idea.sh ${DESTDIR}/usr/bin/idea
-	ln -sf /usr/lib/intellij-idea/bin/idea.png ${DESTDIR}/usr/share/pixmaps
-	ln -sf /usr/lib/intellij-idea/bin/idea.svg ${DESTDIR}/usr/share/icons/hicolor/scalable/apps
-	vinstall ${FILESDIR}/idea.desktop 644 usr/share/applications
+	echo "Dummy"
 }
+
+# prepare() {
+#   cd intellij-community
+# 
+#   # build system doesn't like symlinks
+#   mv "${srcdir}"/idea-android android
+#   mv "${srcdir}"/idea-adt-tools-base android/tools-base
+# 
+#   sed '/def targetOs =/c def targetOs = "linux"' -i build/dependencies/setupJbre.gradle
+#   sed '/String targetOS/c   String targetOS = OS_LINUX' -i platform/build-scripts/groovy/org/jetbrains/intellij/build/BuildOptions.groovy
+#   sed -E 's|(<sysproperty key="jna.nosys")|<sysproperty key="intellij.build.target.os" value="linux" />\1|' -i build.xml
+#   sed -E 's/-Xmx[0-9]+m/-XX:-UseGCOverheadLimit/' -i build.xml
+# }
+# 
+# build() {
+#   cd intellij-community
+#   unset _JAVA_OPTIONS
+#   export JAVA_HOME=/usr/lib/jvm/java-11-openjdk
+#   export PATH="${JAVA_HOME}/bin:${PATH}"
+#   export JDK_16_x64=/usr/lib/jvm/java-8-openjdk
+#   export JDK_18_x64=/usr/lib/jvm/java-8-openjdk
+#   ant build
+#   tar -xf out/idea-ce/artifacts/ideaIC-${_build}-no-jbr.tar.gz -C "${srcdir}"
+# }
+# 
+# package() {
+#   cd idea-IC-${_build}
+# 
+#   # workaround FS#40934
+#   sed -i 's/lcd/on/' bin/*.vmoptions
+# 
+#   rm -rf bin/fsnotifier-arm lib/libpty/linux/x86
+# 
+#   install -dm 755 "${pkgdir}"/usr/share/{licenses,pixmaps,idea,icons/hicolor/scalable/apps}
+#   cp -dr --no-preserve='ownership' bin lib plugins redist "${pkgdir}"/usr/share/idea/
+#   cp -dr --no-preserve='ownership' license "${pkgdir}"/usr/share/licenses/idea
+#   ln -s /usr/share/idea/bin/idea.png "${pkgdir}"/usr/share/pixmaps/
+#   ln -s /usr/share/idea/bin/idea.svg "${pkgdir}"/usr/share/icons/hicolor/scalable/apps/
+#   install -Dm 644 ../idea.desktop -t "${pkgdir}"/usr/share/applications/
+#   install -Dm 755 ../idea.sh "${pkgdir}"/usr/bin/idea
+#   install -Dm 644 build.txt -t "${pkgdir}"/usr/share/idea
+# }
