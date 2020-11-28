@@ -28,8 +28,8 @@ do_install() {
 
 	mv bin lib plugins redist product-info.json build.txt  ${DESTDIR}/usr/lib/intellij-idea
 	mv LICENSE.txt NOTICE.txt license ${DESTDIR}/usr/share/doc/intellij-idea
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/android/lib/libwebp/win -rf
-	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/android/lib/libwebp/mac -rf
+	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/webp/lib/libwebp/win -rf
+	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/webp/lib/libwebp/mac -rf
 	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/windows32 -rf
 	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/windows64 -rf
 	rm ${DESTDIR}/usr/lib/intellij-idea/plugins/maven/lib/maven3/lib/jansi-native/osx -rf
