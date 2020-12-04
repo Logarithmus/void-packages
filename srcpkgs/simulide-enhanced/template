@@ -1,10 +1,9 @@
 # Template file for 'simulide'
-pkgname=simulide
-version=0.4.13
-revision=2
+pkgname=simulide-enhanced
+version=0.4.14
+revision=1
 _pkgname=SimulIDE
 _rev=SR5
-wrksrc=${pkgname}_${version}-${_rev}_Sources
 build_wrksrc=build_XX
 build_style=qmake
 hostmakedepends="qt5-qmake pkg-config"
@@ -14,9 +13,9 @@ short_desc="Electronic circuit simulator for PIC, AVR, Arduino"
 maintainer="Artur Sinila <opensource@logarithmus.dev>"
 license="GPL-3.0-or-later"
 homepage="https://simulide.com"
-distfiles="https://mailfence.com/pub/docs/santigoro/web/${_pkgname}_${version}/${_pkgname}_${version}-${_rev}_Sources.tar.gz"
-checksum=b55b03e507882b8b68a25e5155dcac6020ba273be93bdf689612a0be67056d43
-nopie_files="/usr/bin/simulide"
+distfiles="https://github.com/Logarithmus/simulide-enhanced/archive/${version}.tar.gz"
+checksum=914b383a958fa92b581c792641690d07c592e2ed1bfdc8c4c3445a035ba54240
+replaces="simulide>=0"
 
 if [ "$CROSS_BUILD" ]; then
 	hostmakedepends+=" qt5-host-tools qt5-svg-devel qt5-script-devel \
