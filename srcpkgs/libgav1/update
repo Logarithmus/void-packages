@@ -1,0 +1,2 @@
+site="https://chromium.googlesource.com/codecs/libgav1"
+pattern="tags/v\K[\d.]+"

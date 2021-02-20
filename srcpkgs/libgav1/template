@@ -1,0 +1,37 @@
+# Template file for 'libgav1'
+pkgname=libgav1
+version=0.16.0
+_abseil_version=20200923.3
+revision=1
+build_style=cmake
+configure_args="-DBUILD_SHARED_LIBS=ON"
+makedepends="abseil-cpp-devel"
+short_desc="AV1 decoder by Google"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="Apache-2.0"
+homepage="https://chromium.googlesource.com/codecs/libgav1/"
+distfiles="https://chromium.googlesource.com/codecs/libgav1/+archive/v${version}.tar.gz
+ https://github.com/abseil/abseil-cpp/archive/${_abseil_version}.tar.gz"
+checksum="7d82992244d305ef2c2a35ffe8101380b045e46f4518d989ebdb32c9d28b05de
+ ebe2ad1480d27383e4bf4211e2ca2ef312d5e6a09eba869fd2e8a5c5d553ded2"
+
+do_extract() {
+	mkdir -p $wrksrc
+	bsdtar -xf ${XBPS_SRCDISTDIR}/${pkgname}-${version}/v${version}.tar.gz -C $wrksrc
+	mkdir -p third_party
+	cd third_party
+	bsdtar -xf ${XBPS_SRCDISTDIR}/${pkgname}-${version}/${_abseil_version}.tar.gz
+	mv abseil-cpp-${_abseil_version} abseil-cpp
+}
+
+libgav1-devel_package() {
+    short_desc+=" - development files"
+    depends="${sourcepkg}>=${version}_${revision}"
+    pkg_install() {
+        vmove usr/include
+        vmove "usr/lib/*.a"
+        vmove "usr/lib/*.so"
+		vmove "usr/share/cmake"
+		vmove "usr/lib/pkgconfig"
+    }
+}
