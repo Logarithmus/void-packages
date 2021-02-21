@@ -12,6 +12,11 @@ distfiles="https://github.com/xiph/rav1e/archive/v${version}.tar.gz"
 checksum=c3ea1a2275f09c8a8964084c094d81f01c07fb405930633164ba69d0613a9003
 changelog="https://github.com/xiph/rav1e/releases/tag/v${version}"
 
+post_install() {
+	vlicense LICENSE
+	vlicense PATENTS
+}
+
 rav1e-devel_package() {
     short_desc+=" - development files"
     pkg_install() {
