@@ -1,0 +1,18 @@
+# Template file for 'cargo-c'
+pkgname=cargo-c
+version=0.7.0
+revision=1
+build_style=cargo
+hostmakedepends="pkg-config"
+makedepends="libcurl-devel libressl-devel zlib-devel"
+short_desc="Cargo applet to build and install C-ABI compatibile libraries"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="MIT"
+homepage="https://github.com/lu-zero/cargo-c"
+changelog="https://github.com/lu-zero/cargo-c/releases/latest"
+distfiles="https://github.com/lu-zero/cargo-c/archive/${version}.tar.gz"
+checksum=a4a33e94d09d02b2d081d01a86069a3320bf1d5b48a08aa32995dda4a2ea69fa
+
+post_install() {
+	vlicense LICENSE
+}

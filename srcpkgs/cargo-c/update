@@ -1,0 +1,3 @@
+site="https://github.com/lu-zero/cargo-c/tags"
+pattern="archive/v\K[\d.]+(?=\.tar\.gz)"
+
