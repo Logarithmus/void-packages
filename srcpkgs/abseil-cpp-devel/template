@@ -1,0 +1,13 @@
+# Template file for 'abseil-cpp-devel'
+pkgname=abseil-cpp-devel
+version=20200923.3
+revision=1
+wrksrc=abseil-cpp-${version}
+build_style=cmake
+short_desc="Collection of C++ code designed to augment C++ standard library"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="Apache-2.0"
+homepage="https://abseil.io"
+changelog=https://github.com/abseil/abseil-cpp/releases/latest
+distfiles="https://github.com/abseil/abseil-cpp/archive/${version}.tar.gz"
+checksum=ebe2ad1480d27383e4bf4211e2ca2ef312d5e6a09eba869fd2e8a5c5d553ded2
