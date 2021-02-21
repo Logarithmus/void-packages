@@ -1,0 +1,300 @@
+# Template file for 'abseil-cpp'
+pkgname=abseil-cpp
+version=20200923.3
+revision=1
+wrksrc=abseil-cpp-${version}
+build_style=cmake
+configure_args="-DBUILD_SHARED_LIBS=ON"
+short_desc="Google's fundamental C++ libraries"
+depends="abseil-cpp-algorithm abseil-cpp-base abseil-cpp-container abseil-cpp-debugging
+ abseil-cpp-flags abseil-cpp-functional abseil-cpp-hash abseil-cpp-memory
+ abseil-cpp-meta abseil-cpp-numeric abseil-cpp-random abseil-cpp-status abseil-cpp-strings
+ abseil-cpp-synchronization abseil-cpp-time abseil-cpp-types abseil-cpp-utility"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="Apache-2.0"
+homepage="https://abseil.io"
+changelog="https://github.com/abseil/abseil-cpp/releases/latest"
+distfiles="https://github.com/abseil/abseil-cpp/archive/${version}.tar.gz"
+checksum=ebe2ad1480d27383e4bf4211e2ca2ef312d5e6a09eba869fd2e8a5c5d553ded2
+
+abseil-cpp-devel() {
+	short_desc+=" - development files"
+	depends="abseil-cpp-algorithm-devel abseil-cpp-base-devel abseil-cpp-container-devel
+	 abseil-cpp-debugging-devel abseil-cpp-flags-devel abseil-cpp-functional-devel
+	 abseil-cpp-hash-devel abseil-cpp-memory-devel abseil-cpp-meta-devel
+	 abseil-cpp-numeric-devel abseil-cpp-random-devel abseil-cpp-status-devel
+	 abseil-cpp-strings-devel abseil-cpp-synchronization-devel abseil-cpp-time-devel
+	 abseil-cpp-types-devel abseil-cpp-utility-devel"
+}
+
+abseil-cpp-algorithm_package() {
+	short_desc+=" (algorithm)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/algorithm/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-algorithm-devel_package() {
+	short_desc+=" (algorithm) - development files"
+	depends="abseil-cpp-algorithm>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/algorithm"
+	}
+}
+
+abseil-cpp-base_package() {
+	short_desc+=" (base)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/base/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-base-devel_package() {
+	short_desc+=" (base) - development files"
+	depends="abseil-cpp-base>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/base"
+	}
+}
+
+abseil-cpp-container_package() {
+	short_desc+=" (container)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/container/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-container-devel_package() {
+	short_desc+=" (container) - development files"
+	depends="abseil-cpp-container>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/container"
+	}
+}
+
+abseil-cpp-debugging_package() {
+	short_desc+=" (debugging)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/debugging/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-debugging-devel_package() {
+	short_desc+=" (debugging) - development files"
+	depends="abseil-cpp-debugging>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/debugging"
+	}
+}
+
+abseil-cpp-flags_package() {
+	short_desc+=" (flags)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/flags/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-flags-devel_package() {
+	short_desc+=" (flags) - development files"
+	depends="abseil-cpp-flags>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/flags"
+	}
+}
+
+abseil-cpp-functional_package() {
+	short_desc+=" (functional)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/functional/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-functional-devel_package() {
+	short_desc+=" (functional) - development files"
+	depends="abseil-cpp-functional>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/functional"
+	}
+}
+
+abseil-cpp-hash_package() {
+	short_desc+=" (hash)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/hash/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-hash-devel_package() {
+	short_desc+=" (hash) - development files"
+	depends="abseil-cpp-hash>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/hash"
+	}
+}
+
+abseil-cpp-memory_package() {
+	short_desc+=" (memory)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/memory/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-memory-devel_package() {
+	short_desc+=" (memory) - development files"
+	depends="abseil-cpp-memory>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/memory"
+	}
+}
+
+abseil-cpp-meta_package() {
+	short_desc+=" (meta)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/meta/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-meta-devel_package() {
+	short_desc+=" (meta) - development files"
+	depends="abseil-cpp-meta>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/meta"
+	}
+}
+
+abseil-cpp-numeric_package() {
+	short_desc+=" (numeric)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/numeric/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-numeric-devel_package() {
+	short_desc+=" (numeric) - development files"
+	depends="abseil-cpp-numeric>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/numeric"
+	}
+}
+
+abseil-cpp-random_package() {
+	short_desc+=" (random)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/random/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-random-devel_package() {
+	short_desc+=" (random) - development files"
+	depends="abseil-cpp-random>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/random"
+	}
+}
+
+abseil-cpp-status_package() {
+	short_desc+=" (status)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/status/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-status-devel_package() {
+	short_desc+=" (status) - development files"
+	depends="abseil-cpp-status>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/status"
+	}
+}
+
+abseil-cpp-strings_package() {
+	short_desc+=" (strings)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/strings/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-strings-devel_package() {
+	short_desc+=" (strings) - development files"
+	depends="abseil-cpp-strings>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/strings"
+	}
+}
+
+abseil-cpp-synchronization_package() {
+	short_desc+=" (synchronization)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/synchronization/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-synchronization-devel_package() {
+	short_desc+=" (synchronization) - development files"
+	depends="abseil-cpp-synchronization>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/synchronization"
+	}
+}
+
+abseil-cpp-time_package() {
+	short_desc+=" (time)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/time/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-time-devel_package() {
+	short_desc+=" (time) - development files"
+	depends="abseil-cpp-time>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/time"
+	}
+}
+
+abseil-cpp-types_package() {
+	short_desc+=" (types)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/types/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-types-devel_package() {
+	short_desc+=" (types) - development files"
+	depends="abseil-cpp-types>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/types"
+	}
+}
+
+abseil-cpp-utility_package() {
+	short_desc+=" (utility)"
+	pkg_install() {
+		mkdir -p $PKGDESTDIR/usr/lib
+		mv "${build_wrksrc}/absl/utility/*.so" $PKGDESTDIR/usr/lib/
+	}
+}
+
+abseil-cpp-utility-devel_package() {
+	short_desc+=" (utility) - development files"
+	depends="abseil-cpp-utility>=${version}_${revision}"
+	pkg_install() {
+		vmove "usr/include/absl/utility"
+	}
+}
