@@ -1,0 +1,32 @@
+# Template file for 'svt-av1'
+pkgname=svt-av1
+version=0.8.6
+revision=1
+build_style=cmake
+hostmakedepends=""
+makedepends=""
+depends=""
+short_desc="The Scalable Video Technology for AV1 (SVT-AV1 Encoder and Decoder)"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="custom:AOM-license"
+homepage="https://gitlab.com/AOMediaCodec/SVT-AV1"
+distfiles="https://gitlab.com/AOMediaCodec/SVT-AV1/-/archive/v${version}/SVT-AV1-v${version}.tar.gz"
+checksum=badbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadb
+changelog="https://gitlab.com/AOMediaCodec/SVT-AV1/-/blob/master/CHANGELOG.md"
+
+svt-av1-devel_package() {
+    short_desc+=" - development files"
+    pkg_install() {
+        vmove usr/include
+        vmove "usr/lib/*.a"
+        vmove "usr/lib/*.so"
+        vmove usr/lib/pkgconfig
+    }
+}
+
+svt-av1-tools_package() {
+    short_desc+=" - tools"
+    pkg_install() {
+        vmove usr/bin
+    }
+}
