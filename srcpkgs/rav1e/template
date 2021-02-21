@@ -1,0 +1,30 @@
+# Template file for 'rav1e'
+pkgname=rav1e
+version=0.4.0
+revision=1
+build_style=cargo
+hostmakedepends="nasm"
+short_desc="The fastest and safest AV1 encoder"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="BSD-2-Clause"
+homepage="https://github.com/xiph/rav1e"
+distfiles="https://github.com/xiph/rav1e/archive/v${version}.tar.gz"
+checksum=c3ea1a2275f09c8a8964084c094d81f01c07fb405930633164ba69d0613a9003
+changelog="https://github.com/xiph/rav1e/releases/tag/v${version}"
+
+rav1e-devel_package() {
+    short_desc+=" - development files"
+    pkg_install() {
+        vmove usr/include
+        vmove "usr/lib/*.a"
+        vmove "usr/lib/*.so"
+        vmove usr/lib/pkgconfig
+    }
+}
+
+rav1e-tools_package() {
+    short_desc+=" - tools"
+    pkg_install() {
+        vmove usr/bin
+    }
+}
