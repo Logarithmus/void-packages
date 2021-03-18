@@ -1,0 +1,30 @@
+# Template file for 'basu'
+pkgname=basu
+version=0.2.0
+revision=1
+build_style=meson
+hostmakedepends="pkgconf"
+short_desc="Sd-bus, extracted from systemd"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license=LGPL-2.1+
+homepage="https://github.com/emersion/basu"
+distfiles="https://github.com/emersion/basu/archive/v${version}.tar.gz"
+checksum=e2fda9b69fc6c4530173fcf8db94c29aa5f3ed932d948cc6a31892623cde5e4b
+
+libbasu_package() {
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - library"
+	pkg_install() {
+		vmove usr/lib/*.so.*
+	}
+}
+
+libbasu-devel_package() {
+	depends="${sourcepkg}>=${version}_${revision}"
+	short_desc+=" - development files"
+	pkg_install() {
+		vmove usr/lib/*.so
+		vmove usr/lib/pkgconfig
+		vmove usr/include
+	}
+}
