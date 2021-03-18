@@ -1,0 +1,30 @@
+# Template file for 'flutter'
+pkgname=flutter
+version=2.0.2
+revision=1
+depends="curl git unzip libglvnd glu"
+short_desc="Mobile app SDK to help developers and designers build modern mobile apps for iOS and Android"
+maintainer="Artur Sinila <opensource@logarithmus.dev>"
+license="GPL-3.0-or-later"
+homepage="https://flutter.dev"
+distfiles="https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_${version}-stable.tar.xz"
+checksum=badbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadb
+
+do_build() {
+	cd "${srcdir}/${pkgname}"
+	"${srcdir}/${pkgname}/bin/${pkgname}" doctor
+}
+
+do_install() {
+  rm -rf "${srcdir}/${pkgname}/bin/cache" "${srcdir}/${pkgname}/.pub-cache"
+  install -Dm644 "${srcdir}/${pkgname}/LICENSE" "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+  install -Dm755 "${srcdir}/${pkgname}.sh" "${pkgdir}/etc/profile.d/${pkgname}.sh"
+  install -Dm755 "${srcdir}/${pkgname}.csh" "${pkgdir}/etc/profile.d/${pkgname}.csh"
+  install -dm755 "${pkgdir}/opt/${pkgname}"
+  install -dm755 "${pkgdir}/usr/bin"
+  cp -ra "${srcdir}/${pkgname}" "${pkgdir}/opt/"
+  find "${pkgdir}/opt/${pkgname}" -type d -exec chmod a+rx {} +
+  find "${pkgdir}/opt/${pkgname}" -type f -exec chmod a+r {} +
+  chmod a+rw "${pkgdir}/opt/${pkgname}/version"
+  ln -s "/opt/${pkgname}/bin/${pkgname}" "${pkgdir}/usr/bin/${pkgname}"
+}
