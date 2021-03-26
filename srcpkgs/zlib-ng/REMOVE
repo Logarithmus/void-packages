@@ -1,0 +1,5 @@
+#REMOVE
+if [ "$ACTION" = "purge" ]; then
+	_pattern="\/usr\/lib\/zlib-ng\/libz\.so\.1"
+	sed -i "0,/${_pattern}/{/${_pattern}/d;}" etc/ld.so.preload
+fi
