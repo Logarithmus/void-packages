@@ -1,0 +1,23 @@
+# Template file for 'orangepi-base'
+# Based on bananapi-base
+pkgname=orangepi-base
+version=0.1.0
+revision=1
+build_style=meta
+short_desc="Void Linux Orange Pi platform package"
+maintainer="Artur Sinila <freesoftware@logarithmus.dev>"
+license="GPL-3.0-only"
+homepage="http://www.voidlinux.org"
+
+archs="armv7l*"
+depends="virtual?ntp-daemon sun7i-kernel bananapi-uboot linux-firmware-network"
+
+do_install() {
+	# Load the sunxi-gmac module by default.
+	vmkdir usr/lib/modules-load.d
+	echo sunxi-gmac > ${DESTDIR}/usr/lib/modules-load.d/bpi.conf
+	# Set proper perms to some devices.
+	vmkdir usr/lib/udev/rules.d
+	echo 'KERNEL=="disp|cedar_dev|mali|ump", MODE="0660", GROUP="video"' > ${DESTDIR}/usr/lib/udev/rules.d/50-bpi-video.rules
+
+}
