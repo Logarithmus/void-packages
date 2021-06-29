@@ -1,0 +1,68 @@
+diff --git a/test/copyrel.sh b/test/copyrel.sh
+index 8e365bf..d1538f8 100755
+--- a/test/copyrel.sh
++++ b/test/copyrel.sh
+@@ -25,7 +25,7 @@ bar:
+   .long 42
+ EOF
+ 
+-clang -fuse-ld=`pwd`/../mold -o $t/exe $t/a.o $t/b.o
++clang -fuse-ld=`pwd`/../mold -no-pie -o $t/exe $t/a.o $t/b.o
+ $t/exe | grep -q '42 42 1'
+ 
+ echo OK
+diff --git a/test/i386-shared.sh b/test/i386-shared.sh
+index 663f481..8e7f1eb 100755
+--- a/test/i386-shared.sh
++++ b/test/i386-shared.sh
+@@ -31,7 +31,7 @@ int main() {
+ EOF
+ 
+ clang -c -o $t/d.o $t/c.c -fno-PIC -m32
+-clang -fuse-ld=`pwd`/../mold -o $t/exe $t/d.o $t/b.so -m32
++clang -fuse-ld=`pwd`/../mold -no-pie -o $t/exe $t/d.o $t/b.so -m32
+ $t/exe | grep -q '5 7 2'
+ 
+ clang -c -o $t/e.o $t/c.c -fPIE -m32
+diff --git a/test/nocopyreloc.sh b/test/nocopyreloc.sh
+index 9cb52c4..8f09ca1 100755
+--- a/test/nocopyreloc.sh
++++ b/test/nocopyreloc.sh
+@@ -22,10 +22,10 @@ int main() {
+ }
+ EOF
+ 
+-clang -fuse-ld=`pwd`/../mold -o $t/exe $t/a.so $t/b.o
++clang -fuse-ld=`pwd`/../mold -no-pie -o $t/exe $t/a.so $t/b.o
+ $t/exe | grep -q '3 5'
+ 
+-! clang -fuse-ld=`pwd`/../mold -o $t/exe $t/a.so $t/b.o \
++! clang -fuse-ld=`pwd`/../mold -no-pie -o $t/exe $t/a.so $t/b.o \
+   -Wl,-z,nocopyreloc 2> $t/log || false
+ 
+ grep -q 'recompile with -fPIE' $t/log
+diff --git a/test/weak-export.sh b/test/weak-export.sh
+index dd96b7c..cf782bd 100755
+--- a/test/weak-export.sh
++++ b/test/weak-export.sh
+@@ -18,17 +18,17 @@ EOF
+ 
+ cc -fno-PIC -c -o $t/c.o $t/a.c
+ 
+-clang -fuse-ld=`pwd`/../mold -o $t/exe $t/c.o
++clang -fuse-ld=`pwd`/../mold -no-pie -o $t/exe $t/c.o
+ ! readelf --dyn-syms $t/exe | grep -q 'NOTYPE  WEAK   DEFAULT  UND foo' || false
+ $t/exe | grep -q '3 5'
+ 
+-clang -fuse-ld=`pwd`/../mold -o $t/exe $t/c.o -Wl,-z,nocopyreloc
++clang -fuse-ld=`pwd`/../mold -no-pie -o $t/exe $t/c.o -Wl,-z,nocopyreloc
+ ! readelf --dyn-syms $t/exe | grep -q 'NOTYPE  WEAK   DEFAULT  UND foo' || false
+ $t/exe | grep -q '3 5'
+ 
+ cc -fPIC -c -o $t/b.o $t/a.c
+ 
+-clang -fuse-ld=`pwd`/../mold -o $t/exe $t/b.o
++clang -fuse-ld=`pwd`/../mold -no-pie -o $t/exe $t/b.o
+ readelf --dyn-syms $t/exe | grep -q 'NOTYPE  WEAK   DEFAULT  UND foo'
+ $t/exe | grep -q '3 5'
+ 

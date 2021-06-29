@@ -1,0 +1,15 @@
+diff --git a/mold.h b/mold.h
+index 49fd7fd..9da6a9d 100644
+--- a/mold.h
++++ b/mold.h
+@@ -29,6 +29,10 @@
+ #include <vector>
+ #include <xxh3.h>
+ 
++#ifdef PAGE_SIZE
++#undef PAGE_SIZE
++#endif
++
+ typedef uint8_t u8;
+ typedef uint16_t u16;
+ typedef uint32_t u32;

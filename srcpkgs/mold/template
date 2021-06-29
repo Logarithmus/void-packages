@@ -1,0 +1,49 @@
+# Template file for 'mold'
+pkgname=mold
+_commit_hash=191a69e36f5da5d18219ca5bce739c6e86039d31
+_ver=0.9.3-rc1
+version=0.9.3
+revision=1
+archs=x86_64*
+wrksrc=mold-${_ver}
+build_style=gnu-makefile
+makedepends="mimalloc-devel openssl-devel xxHash-devel tbb-devel zlib-devel"
+checkdepends="ripgrep libdwarf clang tar"
+short_desc="High performance drop-in replacement for existing Unix linkers"
+maintainer="Artur Sinila <freesoftware@logarithmus.dev>"
+license="AGPL-3.0-or-later"
+homepage="https://github.com/rui314/mold"
+changelog="https://github.com/rui314/mold/releases"
+distfiles="https://github.com/rui314/mold/archive/refs/tags/v${_ver}.tar.gz"
+checksum=ac35cdd14bcbd15e01b79831f50ce79f31830df225c1429725008f7eda322d7e
+
+# use system-wide installed mimalloc instead of the vendored one
+export SYSTEM_MIMALLOC=1
+export GIT_HASH=$_commit_hash
+
+if [ "$XBPS_TARGET_LIBC" = "glibc" ]; then
+	if [ "$XBPS_TARGET_WORDSIZE" -eq 64 ]; then
+		checkdepends+=" glibc-devel-32bit libgcc-devel-32bit"
+	else
+		checkdepends+=" glibc-devel libgcc-devel"
+	fi
+fi
+
+pre_patch() {
+	vsed -i test/*.sh -e "s/grep -P/rg -P/;s/rg -\([a-yA-Z]*\)z/rg -\1U/"
+}
+
+pre_install() {
+	vmkdir usr/bin
+}
+
+post_install() {
+	vlicense LICENSE
+}
+
+pre_check() {
+	# skip 32-bit tests on 64-bit musl, because musl doesn't support multilib
+	if [ "$XBPS_TARGET_LIBC" = "musl" ] && [ "$XBPS_TARGET_WORDSIZE" -eq 64 ]; then
+		rm ${wrksrc}/test/i386*.sh
+	fi
+}
