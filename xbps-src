@@ -497,7 +497,7 @@ fi
 
 # if XBPS_MASTERDIR unset, defaults to $XBPS_DISTDIR/masterdir.
 : ${XBPS_MASTERDIR:=$XBPS_DISTDIR/masterdir}
-[ ! -d $XBPS_MASTERDIR ] &&  mkdir -p $XBPS_MASTERDIR
+[ ! -d $XBPS_MASTERDIR ] && mkdir -p $XBPS_MASTERDIR
 
 # if XBPS_HOSTDIR unset, defaults to $XBPS_DISTDIR/hostdir.
 : ${XBPS_HOSTDIR:=$XBPS_DISTDIR/hostdir}
@@ -669,7 +669,7 @@ if [ "$XBPS_CCACHE" ]; then
     # changes when e.g. bootstrapping
     export CCACHE_COMPILERCHECK=content CCACHE_COMPRESS=1
     export PATH="$CCACHEPATH:$PATH"
-    mkdir -p $CCACHE_DIR
+    [ ! -d "$CCACHE_DIR" ] && mkdir -p $CCACHE_DIR
 fi
 
 #
@@ -684,7 +684,7 @@ if [ "$XBPS_DISTCC" ]; then
     fi
     export DISTCC_DIR="$XBPS_HOSTDIR/distcc-${XBPS_CROSS_BUILD:-${XBPS_MACHINE}}"
     export DISTCC_HOSTS="$XBPS_DISTCC_HOSTS"
-    mkdir -p $DISTCC_DIR
+    [ ! -d "$DISTCC_DIR" ] && mkdir -p $DISTCC_DIR
 fi
 
 check_build_requirements
