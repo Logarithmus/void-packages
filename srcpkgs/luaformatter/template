@@ -1,0 +1,28 @@
+# Template file for 'luaformatter'
+pkgname=luaformatter
+version=1.3.6
+_antlr4_version=4.9.3
+_args_version=6.3.0
+revision=1
+create_wrksrc=yes
+build_wrksrc=LuaFormatter
+build_style=cmake
+hostmakedepends="pkg-config"
+makedepends="yaml-cpp-devel catch2"
+short_desc="Code formatter for Lua"
+maintainer="Artur Sinila <freesoftware@logarithmus.dev>"
+license="Apache-2.0"
+homepage="https://github.com/Koihik/LuaFormatter"
+distfiles="https://github.com/Koihik/LuaFormatter/archive/refs/tags/${version}.tar.gz>luaformatter-${version}.tar.gz
+ https://github.com/antlr/antlr4/archive/refs/tags/${_antlr4_version}.tar.gz>antlr4-${_antlr4_version}.tar.gz
+ https://github.com/Taywee/args/archive/refs/tags/${_args_version}.tar.gz>args-${_args_version}.tar.gz"
+checksum="57dff41282f2e039f7f323511f2c9c238a174f2772fba567bb083bc3ed9230da
+ efe4057d75ab48145d4683100fec7f77d7f87fa258707330cadd1f8e6f7eecae
+ e072c4a9d6990872b0ecb45480a5487db82e0dc3d27c3c3eb9fc0930c0d796ae"
+
+post_extract() {
+  mv ${wrksrc}/${build_wrksrc}-${version} ${wrksrc}/${build_wrksrc}
+	mv ${wrksrc}/antlr4-${_antlr4_version}/* ${wrksrc}/${build_wrksrc}/third_party/antlr4/
+	mv ${wrksrc}/args-${_args_version}/* ${wrksrc}/${build_wrksrc}/third_party/args/
+  echo "${patch_args}"
+}

@@ -1,0 +1,16 @@
+--- a/LuaFormatter/CMakeLists.txt
++++ b/LuaFormatter/CMakeLists.txt
+@@ -99,12 +99,9 @@
+   ${PROJECT_SOURCE_DIR}/third_party/antlr4/runtime/Cpp/runtime/src/*.cpp
+   )
+ 
+-file(GLOB_RECURSE yaml-cpp-src
+-  ${PROJECT_SOURCE_DIR}/third_party/yaml-cpp/src/*.cpp
+-  )
+ 
+ add_library (antlr4-cpp-runtime ${antlr4-cpp-src})
+-add_library (yaml-cpp ${yaml-cpp-src})
++find_library(yaml-cpp yaml-cpp ${PROJECT_SOURCE_DIR}/third_party/yaml-cpp)
+ 
+ add_executable(lua-format ${src_dir} src/main.cpp)
+ 
