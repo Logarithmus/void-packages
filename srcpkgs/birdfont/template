@@ -1,0 +1,16 @@
+# Template file for 'birdfont'
+pkgname=birdfont
+version=2.29.6
+revision=1
+hostmakedepends="vala"
+makedepends="libgee08-devel glib-devel gtk+3-devel webkit2gtk-devel libnotify-devel sqlite-devel"
+short_desc="Font editor for creating fonts in TTF, EOT, SVG and BIRDFONT format"
+maintainer="Artur Sinila <freesoftware@logarithmus.dev>"
+license="GPL-3.0-or-later"
+homepage="https://birdfont.org/"
+distfiles=""
+checksum=badbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadbadb
+
+do_install() {
+  echo "TODO"
+}
